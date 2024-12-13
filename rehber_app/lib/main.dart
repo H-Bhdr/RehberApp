@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'services/userService.dart';
+import 'models/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,16 +52,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  List<User> _users = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsers();
+  }
+
+  Future<void> _loadUsers() async {
+    final users = await fetchUsers();
+    setState(() {
+      _users = users;
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
+    _loadUsers(); // Reload users when the button is pressed
   }
 
   @override
@@ -105,6 +117,17 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _users.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('${_users[index].firstName} ${_users[index].lastName}'),
+                    subtitle: Text('ID: ${_users[index].id}'),
+                  );
+                },
+              ),
             ),
           ],
         ),
