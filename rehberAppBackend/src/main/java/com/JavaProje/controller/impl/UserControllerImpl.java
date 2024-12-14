@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.JavaProje.controller.IUserController;
-import com.JavaProje.entities.Users;
+import com.JavaProje.dto.DtoUser;
+import com.JavaProje.dto.DtoUserIU;
 import com.JavaProje.services.IUserService;
+
+import jakarta.validation.Valid; 
 
 
 @RestController
@@ -24,15 +27,14 @@ public class UserControllerImpl implements IUserController {
 	
 	@PostMapping(path = "/saveUser")
 	@Override
-	public Users saveUsers( @RequestBody Users users) {
+	public DtoUser saveUsers(@RequestBody @Valid DtoUserIU users) {
 		return userService.saveUsers(users);
-	
 	}
 	
 	
 	@GetMapping(path = "/getAllUsers")
 	@Override
-	public List<Users> getAllUsers() {
+	public List<DtoUser> getAllUsers() {
 			return userService.getAllUsers();
 	}
 
@@ -40,7 +42,7 @@ public class UserControllerImpl implements IUserController {
 	
 	@GetMapping(path =  "/getAllUsersById/{id}" )
 	@Override
-	public Users getUsersById( @PathVariable(name = "id") Integer id) {
+	public DtoUser getUsersById( @PathVariable(name = "id") Integer id) {
 		return userService.getUsersById(id);
 	}
 

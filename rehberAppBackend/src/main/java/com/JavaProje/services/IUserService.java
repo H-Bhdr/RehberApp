@@ -1,16 +1,14 @@
 package com.JavaProje.services;
 
 import java.util.List;
-
-import com.JavaProje.entities.Users;
+import com.JavaProje.dto.DtoUser;
+import com.JavaProje.dto.DtoUserIU;
 
 public interface IUserService {
 	
-	public Users saveUsers(Users users);
+	public DtoUser saveUsers(DtoUserIU users);
 	
-	public List<Users> getAllUsers();
+	public List<DtoUser> getAllUsers();
 	
-	public Users getUsersById(Integer id);
-	
-
+	public DtoUser getUsersById(Integer id);
 }
