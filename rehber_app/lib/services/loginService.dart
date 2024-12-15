@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class LoginService {
   static Future<int> login(String email, String password) async {
     final response = await http.post(
-      Uri.parse('http://localhost:8080/rest/api/login/authenticate'),
+      Uri.parse('http://127.0.0.1:8080/rest/api/login/authenticate'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
