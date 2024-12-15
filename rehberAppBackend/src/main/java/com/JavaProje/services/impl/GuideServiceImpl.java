@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.JavaProje.dto.DtoGuide;
 import com.JavaProje.dto.DtoGuideIU;
 import com.JavaProje.entities.Guide;
+import com.JavaProje.entities.Login;
 import com.JavaProje.repository.GuideRepository;
+import com.JavaProje.repository.LoginRepository;
 import com.JavaProje.services.IGuideService;
 
 @Service
@@ -20,12 +22,22 @@ public class GuideServiceImpl implements IGuideService {
 
     @Autowired
     private GuideRepository guideRepository;
+    
+    @Autowired
+    private LoginRepository loginRepository;
 
     @Override
     public DtoGuide saveGuide(DtoGuideIU dtoGuideIU) {
         Guide guide = new Guide();
         BeanUtils.copyProperties(dtoGuideIU, guide);
         guide = guideRepository.save(guide);
+        
+        Login login = new Login();
+        login.setEmail(dtoGuideIU.getEmail());
+        login.setPassword(dtoGuideIU.getPassword());
+        login.setUserId(guide.getId()); // Traveller'ın ID'sini Login tablosuna kaydet
+
+        loginRepository.save(login);
         DtoGuide dtoGuide = new DtoGuide();
         BeanUtils.copyProperties(guide, dtoGuide);
         return dtoGuide;

@@ -1,122 +1,117 @@
-import 'package:flutter/material.dart';
-import 'services/userService.dart';
-import 'models/user.dart';
+ 
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:rehber_app/components/MyNavBAr.dart';
+import 'package:rehber_app/pages/homePage.dart';
+import 'package:rehber_app/pages/journeyPage.dart';
+import 'package:rehber_app/pages/loginPage.dart';
+import 'package:rehber_app/pages/profilePage.dart';
+import 'package:rehber_app/utils/responsive.dart';
+
+void main() async {
+ 
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
+  
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      title: 'Flutter Demo',
+ 
+ 
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your applica-" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+         iconTheme: IconThemeData(color: Colors.blue),
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LoginPage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  List<User> _users = [];
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>(); // Add this key
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUsers();
-  }
+  var pageList = [
+    const HomePage(),
+    const JourneyPage(),
+    const ProfilePage()
+  ];
+  int currentPage = 0;
 
-  Future<void> _loadUsers() async {
-    final users = await fetchUsers();
+  void setPage(int index) {
     setState(() {
-      _users = users;
+      currentPage = index;
     });
   }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-    _loadUsers(); // Reload users when the button is pressed
-  }
+  
 
   @override
   Widget build(BuildContext context) {
- 
-    return Scaffold(
-      appBar: AppBar(
+    final responsiveHelper = ResponsiveHelper(context);
 
-         
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-       
-        title: Text(widget.title),
-      ),
-      body: Center(
-        
-        child: Column(
-         
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _users.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text('${_users[index].firstName} ${_users[index].lastName}'),
-                    subtitle: Text('ID: ${_users[index].id}'),
-                  );
+    return Scaffold(
+      key: _scaffoldKey, // Assign the key to Scaffold
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(responsiveHelper.responsiveAppBarHeight),
+        child: AppBar(
+          scrolledUnderElevation: 0,
+             backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.blue,
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: IconButton(
+                style: ButtonStyle(),
+                color: Colors.blue,
+                iconSize: 28,
+                onPressed: () {
+                  _scaffoldKey.currentState
+                      ?.openEndDrawer(); // Open the end drawer
                 },
+                icon: const Icon(Icons.menu),
               ),
             ),
           ],
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+                padding: const EdgeInsets.only(bottom: 20.0, left: 10,top: 10),
+                child: Text(
+                  'Rehber',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
+          ),
+       
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: pageList[currentPage],
+      bottomNavigationBar: MyNavBar(
+        currentPage: currentPage,
+        onTap: (index) {
+          setPage(index);
+        },
+      ),
     );
   }
 }

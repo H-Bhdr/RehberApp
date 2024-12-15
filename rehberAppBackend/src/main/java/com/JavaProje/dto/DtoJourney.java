@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DtoJourney {
- 
+
     private Integer id;  // Seyahatin ID'si
 
     private String destination;  // Seyahatin hedef noktası

@@ -41,15 +41,6 @@ public class GuideControllerImpl implements IGuideController {
     public DtoGuide getGuideById(@PathVariable(name = "id") Integer id) {
         return guideService.getGuideById(id);
     }
-
-    @PostMapping(path = "/register")
-    public DtoGuide registerGuide(@RequestBody @Valid DtoGuideIU guideIU) {
-        return guideService.saveGuide(guideIU);
-    }
-
-    @PostMapping(path = "/login")
-    public boolean loginGuide(@RequestBody @Valid DtoGuideIU guideIU) {
-        DtoGuide guide = guideService.getGuideByEmail(guideIU.getEmail());
-        return guide != null && guide.login(guideIU.getEmail(), guideIU.getPassword());
-    }
+    
+    
 }

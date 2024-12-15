@@ -10,4 +10,5 @@ public interface ITravellerService {
     DtoTraveller saveTraveller(DtoTravellerIU dtoTravellerIU);
     List<DtoTraveller> getAllTravellers();
     DtoTraveller getTravellerById(Integer id);
+    
 }
