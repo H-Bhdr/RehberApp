@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rehber_app/pages/guidePages/guideHomePage.dart';
+import 'package:rehber_app/pages/guidePages/guideRegisterPage.dart';
+import '../../utils/colors.dart'; // Import colors
+import '../../services/loginService.dart'; // Import the login service
+import '../homePage.dart'; // Import the HomePage
 
 class RehberLoginPage extends StatefulWidget {
   const RehberLoginPage({super.key});
@@ -13,12 +18,35 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void _login() async {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    int responseCode = await LoginService.login(username, password);
+    print('Login response code: $responseCode');
+    if (responseCode != 0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => GuideHomePage()),
+      );
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Giriş başarısız. Lütfen tekrar deneyin.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rehber Login Page'),
-        backgroundColor: Colors.blue,
+        title: Text('Rehber Login Page',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+        ),),
+        backgroundColor: rehberBlue, // Changed color
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -30,7 +58,7 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 100.0),
                   child: Card(
-                    color: Colors.blue,
+                    color: rehberBlue, // Changed color
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -52,7 +80,7 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                   borderSide: BorderSide(
-                                    color: Colors.blueAccent,
+                                    color: rehberBlue, // Changed color
                                     width: 2.0,
                                   ),
                                 ),
@@ -72,7 +100,7 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                   borderSide: BorderSide(
-                                    color: Colors.blue,
+                                    color: rehberBlue, // Changed color
                                     width: 2.0,
                                   ),
                                 ),
@@ -124,11 +152,9 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
               child: SizedBox(
                   width: 330,
                   child: ElevatedButton(
-                      onPressed: () {
-                        // Handle rehber login
-                      },
+                      onPressed: _login, // Use the _login method
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: rehberBlue, // Changed color
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
@@ -146,18 +172,20 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                 ),
                 TextButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => RegisterPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GuideRegisterPage()));
                     },
                     child: Text(
                       "Kayıt Ol!",
                       style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
+                          color: rehberBlue, // Changed color
+                          fontWeight: FontWeight.bold),
                     ))
               ],
             ),
+      
           ],
         ),
       ),

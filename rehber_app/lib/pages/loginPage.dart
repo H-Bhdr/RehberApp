@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'rehberLoginPage.dart'; // Import the RehberLogin page
+import 'package:rehber_app/pages/registerPage.dart';
+import 'guidePages/rehberLoginPage.dart'; // Import the RehberLogin page
+import '../utils/colors.dart'; // Import colors
+import '../services/loginService.dart'; // Import the login service
+import 'homePage.dart'; // Import the HomePage
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,12 +18,35 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void _login() async {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    int responseCode = await LoginService.login(username, password);
+    print('Login response code: $responseCode');
+    if (responseCode != 0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Giriş başarısız. Lütfen tekrar deneyin.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Page'),
-        backgroundColor: Colors.blue,
+               title: Text(' Login Page',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+        ),),
+        backgroundColor: rehberBlue, // Changed color
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -31,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 100.0),
                   child: Card(
-                    color: Colors.blue,
+                    color: rehberBlue, // Changed color
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -53,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                   borderSide: BorderSide(
-                                    color: Colors.blue,
+                                    color: rehberBlue, // Changed color
                                     width: 2.0,
                                   ),
                                 ),
@@ -73,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                   borderSide: BorderSide(
-                                    color: Colors.blue,
+                                    color: rehberBlue, // Changed color
                                     width: 2.0,
                                   ),
                                 ),
@@ -125,11 +152,9 @@ class _LoginPageState extends State<LoginPage> {
               child: SizedBox(
                   width: 330,
                   child: ElevatedButton(
-                      onPressed: () {
-                        // Handle user login
-                      },
+                      onPressed: _login, // Use the _login method
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: rehberBlue, // Changed color
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
@@ -147,20 +172,21 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => RegisterPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()));
                     },
                     child: Text(
                       "Kayıt Ol!",
                       style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
+                          color: rehberBlue, // Changed color
+                          fontWeight: FontWeight.bold),
                     ))
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 30.0),
+              padding: const EdgeInsets.only(top: 0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -178,7 +204,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         "Giriş Yap!",
                         style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                            color: rehberBlue, // Changed color
+                            fontWeight: FontWeight.bold),
                       ))
                 ],
               ),
