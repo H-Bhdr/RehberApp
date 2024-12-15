@@ -10,3 +10,4 @@ import com.JavaProje.entities.Users;
 public interface UserRepository extends JpaRepository<Users, Integer>{
 
 }
+ 

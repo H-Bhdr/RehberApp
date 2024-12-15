@@ -1,5 +1,7 @@
 package com.JavaProje.entities;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

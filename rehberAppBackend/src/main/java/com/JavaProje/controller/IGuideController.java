@@ -9,5 +9,5 @@ import java.util.UUID;
 public interface IGuideController {
     DtoGuide saveGuide(DtoGuideIU dtoGuideIU);
     List<DtoGuide> getAllGuides();
-    DtoGuide getGuideById(UUID id);
+    DtoGuide getGuideById(Integer id);
 }

@@ -1,5 +1,8 @@
 package com.JavaProje.entities;
 
+
+import java.util.UUID;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +28,7 @@ public class Guide {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "phone_number", nullable = false)
@@ -35,8 +38,11 @@ public class Guide {
     private String password;
 
     @Column(name = "expertise_area", nullable = false)
-    private String expertiseArea;  // Rehberin uzmanlık alanı
+    private String expertiseArea;  
 
     @Column(name = "description", nullable = false)
-    private String description;  // Rehberin kendini tanıttığı açıklama
+    private String description;  
+    
+    @Column(name = "bio", nullable = false)
+    private String bio;  
 }

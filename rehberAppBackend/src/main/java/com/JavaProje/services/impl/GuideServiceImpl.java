@@ -42,7 +42,7 @@ public class GuideServiceImpl implements IGuideService {
     }
 
     @Override
-    public DtoGuide getGuideById(UUID id) {
+    public DtoGuide getGuideById(Integer id) {
         Optional<Guide> optional = guideRepository.findById(id);
         if (optional.isPresent()) {
             DtoGuide dtoGuide = new DtoGuide();

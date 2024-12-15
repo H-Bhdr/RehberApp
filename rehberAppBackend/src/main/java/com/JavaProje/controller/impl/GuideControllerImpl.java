@@ -1,7 +1,6 @@
 package com.JavaProje.controller.impl;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,7 @@ public class GuideControllerImpl implements IGuideController {
 
     @GetMapping(path = "/getGuideById/{id}")
     @Override
-    public DtoGuide getGuideById(@PathVariable(name = "id") UUID id) {
+    public DtoGuide getGuideById(@PathVariable(name = "id") Integer id) {
         return guideService.getGuideById(id);
     }
 }

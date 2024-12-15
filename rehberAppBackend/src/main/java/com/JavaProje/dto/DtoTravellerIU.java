@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DtoTravellerIU {
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String phoneNumber;
-    private String profilePicture;
-    private String bio;
-    private Integer age;
+    private String password;
 
     // Getter ve Setter'lar
 }

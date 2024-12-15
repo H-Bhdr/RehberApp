@@ -39,7 +39,7 @@ public class TravellerControllerImpl implements ITravellerController {
 
     @GetMapping(path = "/getTravellerById/{id}")
     @Override
-    public DtoTraveller getTravellerById(@PathVariable(name = "id") UUID id) {
+    public DtoTraveller getTravellerById(@PathVariable(name = "id") Integer id) {
         return travellerService.getTravellerById(id);
     }
 }

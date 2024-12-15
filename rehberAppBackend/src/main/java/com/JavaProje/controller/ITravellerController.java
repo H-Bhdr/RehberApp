@@ -9,5 +9,5 @@ import java.util.UUID;
 public interface ITravellerController {
     DtoTraveller saveTraveller(DtoTravellerIU dtoTravellerIU);
     List<DtoTraveller> getAllTravellers();
-    DtoTraveller getTravellerById(UUID id);
+    DtoTraveller getTravellerById(Integer id);
 }

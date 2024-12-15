@@ -44,7 +44,7 @@ public class TravellerServiceImpl implements ITravellerService {
 
 
 	@Override
-	public DtoTraveller getTravellerById(UUID id) {
+	public DtoTraveller getTravellerById(Integer id) {
 		   Optional<Traveller> optional = travellerRepository.findById(id);
 	        if (optional.isPresent()) {
 	            DtoTraveller dtoTraveller = new DtoTraveller();
