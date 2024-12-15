@@ -33,7 +33,7 @@ public class Match {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status;
+    private MatchStatus status;
 
     public enum MatchStatus {
         ACTIVE,

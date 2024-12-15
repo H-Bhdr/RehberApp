@@ -18,7 +18,7 @@ public class Traveller {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id") 
     private Integer id;
 
     @Column(name = "first_name", nullable = false)
@@ -36,5 +36,8 @@ public class Traveller {
     @Column(name = "password", nullable = false)
     private String password;
 
+    public boolean login(String email, String password) {
+        return this.email.equals(email) && this.password.equals(password);
+    }
 
 }

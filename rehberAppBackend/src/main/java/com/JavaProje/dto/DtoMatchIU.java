@@ -1,5 +1,13 @@
 package com.JavaProje.dto;
 
-public class DtoMatchIU {
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+public class DtoMatchIU {
+    private Integer guideId;
+    private Integer travellerId;
+    private Integer journeyId;
+    private String status;
 }

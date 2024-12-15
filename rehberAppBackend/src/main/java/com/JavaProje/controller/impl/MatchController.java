@@ -6,10 +6,13 @@ import com.JavaProje.entities.Journey;
 import com.JavaProje.entities.Match;
 import com.JavaProje.entities.Traveller;
 import com.JavaProje.services.impl.MatchService;
+import com.JavaProje.dto.DtoMatch;
+import com.JavaProje.dto.DtoMatchIU;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,18 +24,23 @@ public class MatchController {
     private final MatchService matchService;
 
     @PostMapping("/apply")
-    public Match applyToJourney(@RequestParam Integer travellerId, @RequestParam Integer journeyId, 
-                                @RequestParam Integer guideId) {
-        Traveller traveller = new Traveller();
-        traveller.setId(travellerId);
-        
-        Journey journey = new Journey();
-        journey.setId(journeyId);
-        
-        Guide guide = new Guide();
-        guide.setId(guideId); // Guide parametresini alıyoruz ve set ediyoruz
-        
-        return matchService.applyToJourney(traveller, journey, guide); // Guide'ı metodumuza geçiriyoruz
+    public DtoMatch applyToJourney(@RequestBody DtoMatchIU dtoMatchIU) {
+        return matchService.applyToJourney(dtoMatchIU);
+    }
+
+    @GetMapping("/list")
+    public List<DtoMatch> listAllMatches() {
+        return matchService.listAllMatches();
+    }
+
+    @GetMapping("/listByTraveller")
+    public List<DtoMatch> listMatchesByTraveller(@RequestParam Integer travellerId) {
+        return matchService.listMatchesByTraveller(travellerId);
+    }
+
+    @GetMapping("/listByGuide")
+    public List<DtoMatch> listMatchesByGuide(@RequestParam Integer guideId) {
+        return matchService.listMatchesByGuide(guideId);
     }
 }
 

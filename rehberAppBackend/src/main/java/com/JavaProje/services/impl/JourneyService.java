@@ -19,7 +19,7 @@ public class JourneyService {
     // Seyahat oluşturma
     public Journey createJourney(Guide guide, String destination, String description, 
                                  String startDate, String endDate) {
-        Journey journey = new Journey();
+        Journey journey = new Journey(); 
         journey.setGuide(guide);
         journey.setDestination(destination);
         journey.setDescription(description);

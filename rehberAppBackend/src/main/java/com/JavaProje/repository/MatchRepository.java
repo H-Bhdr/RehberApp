@@ -18,4 +18,10 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 
     // Seyahat, guide ve traveller'a göre eşleşme kontrolü
     Match findByJourneyIdAndGuideIdAndTravellerId(Integer journeyId, Integer guideId, Integer travellerId);
+
+    // Duruma göre eşleşmeleri listele
+    List<Match> findByStatus(String status);
+
+    // Tüm eşleşmeleri listele
+    List<Match> findAll();
 }

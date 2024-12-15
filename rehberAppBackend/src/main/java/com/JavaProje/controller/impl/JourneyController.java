@@ -13,8 +13,9 @@ import com.JavaProje.dto.DtoJourneyIU;
 import com.JavaProje.entities.Guide;
 import com.JavaProje.entities.Journey;
 import com.JavaProje.services.impl.JourneyService;
+import com.JavaProje.dto.DtoJourney;
 
-import lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor; 
 
 @RestController
 @RequestMapping("/api/journeys")
@@ -43,7 +44,17 @@ public class JourneyController {
 
     // Tüm seyahatleri listele
     @GetMapping("/")
-    public List<Journey> getAllJourneys() {
-        return journeyService.getAllJourneys();  // Tüm seyahatleri alıyoruz
+    public List<DtoJourney> getAllJourneys() {
+        return journeyService.getAllJourneys().stream()
+                .map(journey -> new DtoJourney(
+                        journey.getId(),
+                        journey.getDestination(),
+                        journey.getStartDate(),
+                        journey.getEndDate(),
+                        journey.getDescription(),
+                        journey.getGuide().getId().toString(),
+                        journey.getMatches().stream().map(match -> match.getId().toString()).toList()
+                ))
+                .toList();
     }
 }

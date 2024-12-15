@@ -12,3 +12,4 @@ public interface JourneyRepository extends JpaRepository<Journey, Integer> {
     // Guide'ın oluşturduğu seyahatleri listele
     List<Journey> findByGuide(Guide guide);
 }
+ 
