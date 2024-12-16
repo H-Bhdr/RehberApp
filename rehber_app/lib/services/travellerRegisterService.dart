@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:rehber_app/models/travellerRegisterModel.dart';
 
 class TravellerRegisterService {
-  static const String _url = 'http://localhost:8080/rest/api/guide/saveGuide';
+  static const String _url = 'http://127.0.0.1:8080/rest/api/guide/saveGuide';
 
   Future<void> registerTraveller(TravellerRegisterModel traveller) async {
     final response = await http.post(

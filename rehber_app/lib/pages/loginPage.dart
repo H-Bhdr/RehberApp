@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rehber_app/main.dart';
 import 'package:rehber_app/pages/registerPage.dart';
 import 'guidePages/rehberLoginPage.dart'; // Import the RehberLogin page
 import '../utils/colors.dart'; // Import colors
 import '../services/loginService.dart'; // Import the login service
 import 'homePage.dart'; // Import the HomePage
+import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences package
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -25,9 +27,12 @@ class _LoginPageState extends State<LoginPage> {
     int responseCode = await LoginService.login(username, password);
     print('Login response code: $responseCode');
     if (responseCode != 0) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('traveller_id', responseCode); // Save responseCode as traveller_id
+      print('Saved traveller_id: $responseCode'); // Print the saved traveller_id
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => MyHomePage()),
       );
     } else {
       // Show error message

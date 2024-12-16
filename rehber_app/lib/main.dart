@@ -1,5 +1,3 @@
- 
-
 import 'package:flutter/material.dart';
 import 'package:rehber_app/components/MyNavBAr.dart';
 import 'package:rehber_app/pages/homePage.dart';
@@ -29,6 +27,7 @@ class MyApp extends StatelessWidget {
          iconTheme: IconThemeData(color: Colors.blue),
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        fontFamily: 'Roboto', // Ensure font supports Turkish characters globally
       ),
       home: const LoginPage(),
     );
