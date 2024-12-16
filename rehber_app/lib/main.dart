@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:rehber_app/components/MyNavBAr.dart';
+import 'package:rehber_app/pages/guidePages/GuideProfilePage.dart';
+import 'package:rehber_app/pages/guidePages/guideHomePage.dart';
+import 'package:rehber_app/pages/guidePages/guideJourneyPage.dart';
 import 'package:rehber_app/pages/homePage.dart';
-import 'package:rehber_app/pages/journeyPage.dart';
+import 'package:rehber_app/pages/MyjourneysPage.dart';
 import 'package:rehber_app/pages/loginPage.dart';
 import 'package:rehber_app/pages/profilePage.dart';
 import 'package:rehber_app/utils/responsive.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences package
 
 void main() async {
  
@@ -45,19 +49,42 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(); // Add this key
 
-  var pageList = [
+  var pageList1 = [
     const HomePage(),
     const JourneyPage(),
+    const ProfilePage(),
     const ProfilePage()
   ];
+  
+  var pageList2 = [
+    const GuideHomePage(),
+    const GuideJourneyPage(),
+    const GuideProfilePage(),
+    const GuideProfilePage()
+  ];
+
   int currentPage = 0;
+  List<Widget> currentPageList = [const CircularProgressIndicator()]; // Default value
+
+  @override
+  void initState() {
+    super.initState();
+    _setPageList();
+  }
+
+  void _setPageList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? travellerId = prefs.getInt('traveller_id');
+    setState(() {
+      currentPageList = (travellerId != null) ? pageList1 : pageList2;
+    });
+  }
 
   void setPage(int index) {
     setState(() {
       currentPage = index;
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
        
         ),
       ),
-      body: pageList[currentPage],
+      body: currentPageList.isNotEmpty ? currentPageList[currentPage] : const Center(child: CircularProgressIndicator()),
       bottomNavigationBar: MyNavBar(
         currentPage: currentPage,
         onTap: (index) {

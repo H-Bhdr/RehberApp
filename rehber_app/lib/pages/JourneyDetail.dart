@@ -4,6 +4,10 @@ import 'package:rehber_app/services/listGuidesService.dart';
 import 'package:rehber_app/models/ListGuidesModel.dart';
 import 'package:rehber_app/models/applyModel.dart';
 import 'package:rehber_app/services/applyService.dart';
+import 'package:rehber_app/services/matchService.dart'; // Add this import
+import 'package:rehber_app/models/matchModel.dart'; // Add this import
+import 'package:rehber_app/models/travellerModel.dart'; // Add this import
+import 'package:rehber_app/services/travellerService.dart'; // Add this import
 import 'package:shared_preferences/shared_preferences.dart';
 
 class JourneyDetail extends StatelessWidget {
@@ -25,6 +29,20 @@ class JourneyDetail extends StatelessWidget {
         bio: '',
       );
     }
+  }
+
+  Future<List<String>> fetchParticipantNames(int journeyId) async {
+    List<String> participantNames = [];
+    try {
+      List<Match> matches = await MatchService().getMatchesByJourneyId(journeyId);
+      for (Match match in matches) {
+        Traveller traveller = await TravellerService().getTravellerById(match.travellerId);
+        participantNames.add('${traveller.firstName} ${traveller.lastName}');
+      }
+    } catch (e) {
+      participantNames.add('Unknown Participant');
+    }
+    return participantNames;
   }
 
   void _apply(BuildContext context) async {
@@ -124,20 +142,31 @@ class JourneyDetail extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                'Hatches:',
+                'Participants:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 5),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: journey.matchIds?.length ?? 0,
-                itemBuilder: (context, index) {
-                  final hatch = journey.matchIds![index];
-                  return Text(
-                    hatch,
-                    style: TextStyle(fontSize: 14),
-                  );
+              FutureBuilder<List<String>>(
+                future: fetchParticipantNames(journey.id),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Text('Error loading participant names');
+                  } else {
+                    final participantNames = snapshot.data ?? [];
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: participantNames.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          participantNames[index],
+                          style: TextStyle(fontSize: 14),
+                        );
+                      },
+                    );
+                  }
                 },
               ),
               SizedBox(height: 20),

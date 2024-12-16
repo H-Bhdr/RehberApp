@@ -1,0 +1,43 @@
+
+  final String baseUrl = 'http://localhost:8080/api/matches';
+
+  Future<List<Match>> getMatchesByGuide(int GuideId) async {
+    final response = await http.get(Uri.parse('$baseUrl/listByGuide?GuideId=$GuideId'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+      List<Match> matches = body.map((dynamic item) => Match.fromJson(item)).toList();
+      return matches;
+    } else {
+      throw Exception('Failed to load matches');
+    }
+  }
+
+  Future<List<Journey>> getJourneysByGuide(int GuideId) async {
+    List<Match> matches = await getMatchesByGuide(GuideId);
+    List<Journey> journeys = [];
+
+    for (Match match in matches) {
+      Journey journey = await fetchJourneyById(match.journeyId);
+      journeys.add(journey);
+    }
+
+    return journeys;
+  }
+
+  Future<List<Match>> getMatchesByJourneyId(int journeyId) async {
+    final response = await http.get(Uri.parse('http://localhost:8080/api/matches/list'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data
+          .map((json) => Match.fromJson(json))
+          .where((match) => match.journeyId == journeyId)
+          .toList();
+    } else {
+      throw Exception('Failed to load matches');
+    }
+  }
+
+
+
+  Guide

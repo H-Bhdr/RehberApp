@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rehber_app/main.dart';
 import 'package:rehber_app/pages/guidePages/guideHomePage.dart';
 import 'package:rehber_app/pages/guidePages/guideRegisterPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/colors.dart'; // Import colors
 import '../../services/loginService.dart'; // Import the login service
 import '../homePage.dart'; // Import the HomePage
@@ -13,7 +15,7 @@ class RehberLoginPage extends StatefulWidget {
 }
 
 class _RehberLoginPageState extends State<RehberLoginPage> {
-  bool obscurePassword = true;
+  bool obscurePassword = true; 
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -25,9 +27,12 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
     int responseCode = await LoginService.login(username, password);
     print('Login response code: $responseCode');
     if (responseCode != 0) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('guide_id', responseCode); // Save responseCode as traveller_id
+      print('Saved guide_id: $responseCode'); // Print the s
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => GuideHomePage()),
+        MaterialPageRoute(builder: (context) => MyHomePage()),
       );
     } else {
       // Show error message

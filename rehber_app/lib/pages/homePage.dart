@@ -10,21 +10,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'), // Removed individual font setting
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Center(
-              child: Text('Welcome to Home Page'), // Removed individual font setting
-            ),
-            ListJourneyComponent(), // Added ListJourneyComponent
-          ],
-        ),
-      ),
+      backgroundColor: Colors.white, // Removed individual color setting
+
+      body: ListJourneyComponent(),
     );
   }
 }
