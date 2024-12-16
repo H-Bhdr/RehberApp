@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      
  
  
       debugShowCheckedModeBanner: false,
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var pageList2 = [
     const GuideHomePage(),
     const GuideJourneyPage(),
-    const GuideProfilePage(),
+    const HomePage(),
     const GuideProfilePage()
   ];
 

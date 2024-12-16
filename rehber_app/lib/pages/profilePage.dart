@@ -48,6 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile Page'),
+        backgroundColor: Colors.teal,
       ),
       body: Center(
         child: FutureBuilder<ProfileModel?>(
@@ -62,30 +63,53 @@ class _ProfilePageState extends State<ProfilePage> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-//                    backgroundImage: NetworkImage(profile.profilePictureUrl),
+                  Card(
+                    margin: const EdgeInsets.all(20),
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleAvatar(
+                            radius: 50,
+                            // backgroundImage: NetworkImage(profile.profilePictureUrl),
+                            backgroundColor: Colors.teal,
+                            child: Icon(Icons.person, size: 50, color: Colors.white),
+                          ),
+                          const SizedBox(height: 20),
+                          Text('İsim: ${profile.firstName}', style: TextStyle(fontSize: 18)),
+                          Text('Soyisim: ${profile.lastName}', style: TextStyle(fontSize: 18)),
+                          Text('Email: ${profile.email}', style: TextStyle(fontSize: 18)),
+                          Text('Telefon Numarası: ${profile.phoneNumber}', style: TextStyle(fontSize: 18)),
+                          const SizedBox(height: 20),
+                          // ElevatedButton.icon(
+                          //   onPressed: () {},
+                          //   icon: Icon(Icons.edit, color: Colors.white),
+                          //   label: Text('Edit Profile'),
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor: Colors.teal,
+                          //   ),
+                          // ),
+                          // ElevatedButton.icon(
+                          //   onPressed: () {},
+                          //   icon: Icon(Icons.settings, color: Colors.white),
+                          //   label: Text('Settings'),
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor: Colors.teal,
+                          //   ),
+                         // ),
+                        ],
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  Text('First Name: ${profile.firstName}', style: TextStyle(fontSize: 18)),
-                  Text('Last Name: ${profile.lastName}', style: TextStyle(fontSize: 18)),
-                  Text('Email: ${profile.email}', style: TextStyle(fontSize: 18)),
-                  Text('Phone Number: ${profile.phoneNumber}', style: TextStyle(fontSize: 18)),
-                  const SizedBox(height: 20),
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.edit),
-                    label: Text('Edit Profile'),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.settings),
-                    label: Text('Settings'),
-                  ),
-                  const Spacer(),
                   ElevatedButton.icon(
                     onPressed: _logout,
-                    icon: Icon(Icons.logout),
+                    icon: Icon(Icons.logout, color: Colors.white),
                     label: Text('Logout'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,

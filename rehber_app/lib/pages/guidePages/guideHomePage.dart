@@ -87,53 +87,81 @@ class _GuideHomePageState extends State<GuideHomePage> {
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
-          child: Card(
-            margin: EdgeInsets.all(16.0),
-            elevation: 8.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextField(
-                    controller: _destinationController,
-                    decoration: InputDecoration(labelText: 'Destination'),
-                  ),
-                  TextField(
-                    controller: _descriptionController,
-                    decoration: InputDecoration(labelText: 'Description'),
-                  ),
-                  TextField(
-                    controller: _startDateController,
-                    decoration: InputDecoration(
-                      labelText: 'Start Date',
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () => _selectDate(context, _startDateController),
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    controller: _endDateController,
-                    decoration: InputDecoration(
-                      labelText: 'End Date',
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () => _selectDate(context, _endDateController),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: _createJourney,
-                    child: Text('Create Journey'),
-                  ),
-                ],
+          child: Column(
+            children: [
+              Text(
+                'Gezi Oluştur',
+                style: TextStyle(
+                  fontSize: 32.0,
+                  color: Colors.teal,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
+              SizedBox(height: 20.0),
+              Card(
+                margin: EdgeInsets.all(16.0),
+                elevation: 8.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextField(
+                        controller: _destinationController,
+                        decoration: InputDecoration(
+                          labelText: 'Konum',
+                          prefixIcon: Icon(Icons.location_on),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      TextField(
+                        controller: _descriptionController,
+                        decoration: InputDecoration(
+                          labelText: 'Açıklama',
+                          prefixIcon: Icon(Icons.description),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      TextField(
+                        controller: _startDateController,
+                        decoration: InputDecoration(
+                          labelText: 'Başlangış Tarihi',
+                          prefixIcon: Icon(Icons.calendar_today),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.date_range),
+                            onPressed: () => _selectDate(context, _startDateController),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      TextField(
+                        controller: _endDateController,
+                        decoration: InputDecoration(
+                          labelText: 'Bitiş Tarihi',
+                          prefixIcon: Icon(Icons.calendar_today),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.date_range),
+                            onPressed: () => _selectDate(context, _endDateController),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      ElevatedButton.icon(
+                        onPressed: _createJourney,
+                        icon: Icon(Icons.send),
+                        label: Text('Olustur'),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white, backgroundColor: Colors.teal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

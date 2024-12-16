@@ -50,20 +50,26 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
         style: TextStyle(
           color: Colors.white,
           fontSize: 24,
-        ),),
+          fontWeight: FontWeight.bold,
+        )),
         backgroundColor: rehberBlue, // Changed color
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: SingleChildScrollView( // Make the entire body scrollable
+        padding: EdgeInsets.all(16.0), // Added padding for better spacing
         child: Column(
           children: [
             Center(
               child: SizedBox(
                 width: 355,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 100.0),
+                  padding: const EdgeInsets.only(top: 40.0), // Adjusted top padding
                   child: Card(
                     color: rehberBlue, // Changed color
+                    elevation: 5, // Add shadow for depth
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0), // Round corners of the card
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -73,12 +79,12 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                             "RehberApp'e Hoş Geldin!",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize: 28,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextFormField(
                             controller: _usernameController,
                             decoration: InputDecoration(
@@ -97,7 +103,7 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                           child: TextFormField(
                             controller: _passwordController,
                             obscureText: obscurePassword,
@@ -127,25 +133,25 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                           ),
                         ),
                         Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 10.0, bottom: 30, top: 5),
-                              child: TextButton(
-                                  onPressed: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             ForgotPassword()));
-                                  },
-                                  child: Text(
-                                    "Şifremi Unuttum?",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                            )),
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 20.0, bottom: 30.0),
+                            child: TextButton(
+                                onPressed: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             ForgotPassword()));
+                                },
+                                child: Text(
+                                  "Şifremi Unuttum?",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -153,20 +159,24 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 30.0, bottom: 30),
+              padding: const EdgeInsets.only(top: 20.0, bottom: 30),
               child: SizedBox(
-                  width: 330,
-                  child: ElevatedButton(
-                      onPressed: _login, // Use the _login method
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: rehberBlue, // Changed color
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Text("Giriş Yap"),
-                      ))),
+                width: 330,
+                child: ElevatedButton(
+                  onPressed: _login, // Use the _login method
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: rehberBlue, // Changed color
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      elevation: 5, // Add shadow for depth
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text("Giriş Yap", style: TextStyle(fontSize: 18)),
+                  ),
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -190,7 +200,6 @@ class _RehberLoginPageState extends State<RehberLoginPage> {
                     ))
               ],
             ),
-      
           ],
         ),
       ),
