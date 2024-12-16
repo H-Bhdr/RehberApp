@@ -36,10 +36,19 @@ public class JourneyController {
                                             dtoJourney.getEndDate().toString());
     }
 
-    // Seyahat detaylarını görüntüleme
+ // Seyahat detaylarını görüntüleme
     @GetMapping("/{journeyId}")
-    public Journey getJourney(@PathVariable Integer journeyId) {
-        return journeyService.getJourneyById(journeyId);
+    public DtoJourney getJourney(@PathVariable Integer journeyId) {
+        Journey journey = journeyService.getJourneyById(journeyId);
+        return new DtoJourney(
+            journey.getId(),
+            journey.getDestination(),
+            journey.getStartDate(),
+            journey.getEndDate(),
+            journey.getDescription(),
+            journey.getGuide().getId().toString(),
+            journey.getMatches().stream().map(match -> match.getId().toString()).toList()
+        );
     }
 
     // Tüm seyahatleri listele
